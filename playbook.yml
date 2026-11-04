@@ -1,0 +1,35 @@
+---
+- name: Tareas en los servidores
+  hosts: servidores
+  become: true
+  tasks:
+    - name: Actualizar cache de APT
+      ansible.builtin.apt:
+        update_cache: true
+
+    - name: Crear el usuario itla
+      ansible.builtin.user:
+        name: itla
+        shell: /bin/bash
+        create_home: true
+
+    - name: Crear la carpeta app
+      ansible.builtin.file:
+        path: /home/itla/app
+        state: directory
+        owner: itla
+        group: itla
+
+    - name: Crear hola.txt en la carpeta app
+      ansible.builtin.copy:
+        dest: /home/itla/app/hola.txt
+        content: "Hola desde {{ inventory_hostname }}\n"
+        owner: itla
+        group: itla
+
+    - name: Instalar cowsay y htop
+      ansible.builtin.apt:
+        name:
+          - cowsay
+          - htop
+        state: present

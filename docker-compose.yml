@@ -1,0 +1,46 @@
+x-ubuntu: &ubuntu
+  build: .
+  image: ubuntu-ssh
+
+services:
+  server1:
+    <<: *ubuntu
+    container_name: server1
+    ports: ["2221:22"]
+    networks:
+      red:
+        ipv4_address: 172.20.0.11
+  server2:
+    <<: *ubuntu
+    container_name: server2
+    ports: ["2222:22"]
+    networks:
+      red:
+        ipv4_address: 172.20.0.12
+  server3:
+    <<: *ubuntu
+    container_name: server3
+    ports: ["2223:22"]
+    networks:
+      red:
+        ipv4_address: 172.20.0.13
+  server4:
+    <<: *ubuntu
+    container_name: server4
+    ports: ["2224:22"]
+    networks:
+      red:
+        ipv4_address: 172.20.0.14
+  server5:
+    <<: *ubuntu
+    container_name: server5
+    ports: ["2225:22"]
+    networks:
+      red:
+        ipv4_address: 172.20.0.15
+
+networks:
+  red:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
